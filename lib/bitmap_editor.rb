@@ -17,19 +17,20 @@ class BitmapEditor
   end
 
   def create_new(line)
-    # valdate 1-250
+    # validate 1-250
     n = line.delete('I').split(" ")
     row = n[0].to_i
     column = n[1].to_i
-    unless row > 0 && row < 251
+    if row < 1 || row > 250
+      puts "sorry values must be between 1-250"
+    elsif column < 1 || column > 250
       puts "sorry values must be between 1-250"
     else
-      # create rows (x)
-    end
-    unless column > 0 && column < 251
-      puts "sorry values must be between 1-250"
-    else
-      # create columns (y)
+      # create grid
+      grid = Array.new(row) {Array.new(column, "O")}
+      # puts grid[0].join("")
+      # puts grid[1].join("")
+      grid.each_with_index { |x, i| puts grid[i].join("") }
     end
   end
 
