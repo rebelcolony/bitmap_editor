@@ -1,3 +1,7 @@
+
+# TODO validate in regex
+#
+
 class BitmapEditor
 
   def run(file)
@@ -14,6 +18,8 @@ class BitmapEditor
           clear_grid
       when /[L]\s\d{1,3}\s\d{1,3}\s[A-Z]/
           draw_single(line)
+      when /[V]\s\d{1,3}\s\d{1,3}\s\d{1,3}\s[A-Z]/
+          draw_vertical(line)
       else
           puts 'unrecognised command :('
       end
@@ -59,6 +65,10 @@ class BitmapEditor
       grid[column_coordinate - 1][row_coordinate - 1] = color
       grid.each_with_index { |x, i| puts grid[i].join("") }
     end
+  end
+
+  def draw_vertical(line)
+
   end
 
 end
