@@ -29,16 +29,17 @@ class BitmapEditor
   def create_new(line)
     # validate 1-250
     n = line.delete('I').split(" ")
-    row = n[0].to_i
-    column = n[1].to_i
+    column = n[0].to_i
+    row = n[1].to_i
     if row < 1 || row > 250
       puts "sorry values must be between 1-250"
     elsif column < 1 || column > 250
       puts "sorry values must be between 1-250"
     else
-      @row = row
       @column = column
+      @row = row
       create_blank_grid
+      puts ""
     end
   end
 
@@ -48,27 +49,46 @@ class BitmapEditor
   end
 
   def clear_grid
-    create_blnak_grid
+    create_blank_grid
+    puts ""
   end
 
   def draw_single(line)
     n = line.delete('L').split(" ")
-    row_coordinate = n[0].to_i
-    column_coordinate = n[1].to_i
+    column_coordinate = n[0].to_i
+    row_coordinate = n[1].to_i
     color = n[2]
     if row_coordinate < 1 || row_coordinate > 250
       puts "sorry values must be between 1-250"
     elsif column_coordinate < 1 || column_coordinate > 250
       puts "sorry values must be between 1-250"
     else
-      grid = Array.new(@row) {Array.new(@column, "O")}
-      grid[column_coordinate - 1][row_coordinate - 1] = color
+      grid = Array.new(@column) {Array.new(@row, "O")}
+      grid[row_coordinate - 1][column_coordinate - 1] = color
       grid.each_with_index { |x, i| puts grid[i].join("") }
     end
+    puts ""
   end
 
   def draw_vertical(line)
-
+    n = line.delete('V').split(" ")
+    column_coordinate = n[0].to_i
+    row_coordinate1 = n[1].to_i
+    row_coordinate2 = n[2].to_i
+    color = n[3]
+    if row_coordinate1 < 1 || row_coordinate1 > 250
+      puts "sorry values must be between 1-250"
+    elsif column_coordinate < 1 || column_coordinate > 250
+      puts "sorry values must be between 1-250"
+    elsif row_coordinate2 < 1 || row_coordinate1 > 250
+      puts "sorry values must be between 1-250"
+    else
+      grid = Array.new(@column) {Array.new(@row, "O")}
+      grid[row_coordinate1 - 1][column_coordinate - 1] = color
+      grid[row_coordinate2 - 1][column_coordinate - 1] = color
+      grid.each_with_index { |x, i| puts grid[i].join("") }
+    end
+    puts ""
   end
 
 end
