@@ -13,7 +13,7 @@ class BitmapEditor
       when /[C]/
           clear_grid
       when /[L]\s\d{1,3}\s\d{1,3}\s[A-Z]/
-          draw_line(line)
+          draw_single(line)
       else
           puts 'unrecognised command :('
       end
@@ -32,30 +32,31 @@ class BitmapEditor
     else
       @row = row
       @column = column
-      create_grid
+      create_blank_grid
     end
   end
 
-  def create_grid
+  def create_blank_grid
     grid = Array.new(@row) {Array.new(@column, "O")}
     grid.each_with_index { |x, i| puts grid[i].join("") }
   end
 
   def clear_grid
-    create_grid
+    create_blnak_grid
   end
 
-  def draw_line(line)
+  def draw_single(line)
     n = line.delete('L').split(" ")
     row_coordinate = n[0].to_i
     column_coordinate = n[1].to_i
+    color = n[2]
     if row_coordinate < 1 || row_coordinate > 250
       puts "sorry values must be between 1-250"
     elsif column_coordinate < 1 || column_coordinate > 250
       puts "sorry values must be between 1-250"
     else
-      grid = Array.new(@row) {Array.new(@column, "I")}
-      grid[2][0] = "z"
+      grid = Array.new(@row) {Array.new(@column, "O")}
+      grid[column_coordinate - 1][row_coordinate - 1] = color
       grid.each_with_index { |x, i| puts grid[i].join("") }
     end
   end
