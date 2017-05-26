@@ -84,8 +84,10 @@ class BitmapEditor
       puts "sorry values must be between 1-250"
     else
       grid = Array.new(@column) {Array.new(@row, "O")}
-      grid[row_coordinate1 - 1][column_coordinate - 1] = color
-      grid[row_coordinate2 - 1][column_coordinate - 1] = color
+      range = row_coordinate1 - 1..row_coordinate2 - 1
+      for i in range.step(1) do
+        grid[i][column_coordinate - 1] = color
+      end
       grid.each_with_index { |x, i| puts grid[i].join("") }
     end
     puts ""
