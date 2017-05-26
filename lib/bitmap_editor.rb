@@ -20,6 +20,8 @@ class BitmapEditor
           draw_single(line)
       when /[V]\s\d{1,3}\s\d{1,3}\s\d{1,3}\s[A-Z]/
           draw_vertical(line)
+      when /[H]\s\d{1,3}\s\d{1,3}\s\d{1,3}\s[A-Z]/
+          draw_horizontal(line)
       else
           puts 'unrecognised command :('
       end
@@ -63,7 +65,7 @@ class BitmapEditor
     elsif column_coordinate < 1 || column_coordinate > 250
       puts "sorry values must be between 1-250"
     else
-      grid = Array.new(@column) {Array.new(@row, "O")}
+      grid = Array.new(@row) {Array.new(@column, "O")}
       grid[row_coordinate - 1][column_coordinate - 1] = color
       grid.each_with_index { |x, i| puts grid[i].join("") }
     end
@@ -83,10 +85,33 @@ class BitmapEditor
     elsif row_coordinate2 < 1 || row_coordinate1 > 250
       puts "sorry values must be between 1-250"
     else
-      grid = Array.new(@column) {Array.new(@row, "O")}
+      grid = Array.new(@row) {Array.new(@column, "O")}
       range = row_coordinate1 - 1..row_coordinate2 - 1
       for i in range.step(1) do
         grid[i][column_coordinate - 1] = color
+      end
+      grid.each_with_index { |x, i| puts grid[i].join("") }
+    end
+    puts ""
+  end
+
+  def draw_horizontal(line)
+    n = line.delete('H').split(" ")
+    column_coordinate1 = n[0].to_i
+    column_coordinate2 = n[1].to_i
+    row_coordinate = n[2].to_i
+    color = n[3]
+    if column_coordinate1 < 1 || column_coordinate1 > 250
+      puts "sorry values must be between 1-250"
+    elsif column_coordinate2 < 1 || column_coordinate2 > 250
+      puts "sorry values must be between 1-250"
+    elsif row_coordinate < 1 || row_coordinate > 250
+      puts "sorry values must be between 1-250"
+    else
+      grid = Array.new(@row) {Array.new(@column, "O")}
+      range = column_coordinate1 - 1..column_coordinate2 - 1
+      for i in range.step(1) do
+        grid[row_coordinate - 1][i] = color
       end
       grid.each_with_index { |x, i| puts grid[i].join("") }
     end
