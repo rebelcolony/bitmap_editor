@@ -1,6 +1,6 @@
 
 # TODO validate in regex
-#
+# Draw grid only once
 
 class BitmapEditor
 
@@ -45,16 +45,6 @@ class BitmapEditor
     end
   end
 
-  def create_blank_grid
-    grid = Array.new(@row) {Array.new(@column, "O")}
-    grid.each_with_index { |x, i| puts grid[i].join("") }
-  end
-
-  def clear_grid
-    create_blank_grid
-    puts ""
-  end
-
   def draw_single(line)
     n = line.delete('L').split(" ")
     column_coordinate = n[0].to_i
@@ -65,12 +55,27 @@ class BitmapEditor
     elsif column_coordinate < 1 || column_coordinate > 250
       puts "sorry values must be between 1-250"
     else
-      grid = Array.new(@row) {Array.new(@column, "O")}
-      grid[row_coordinate - 1][column_coordinate - 1] = color
-      grid.each_with_index { |x, i| puts grid[i].join("") }
+      # grid = Array.new(@row) {Array.new(@column, "O")}
+      @grid[row_coordinate - 1][column_coordinate - 1] = color
+      # @grid.each_with_index { |x, i| puts @grid[i].join("") }
     end
+    # draw
+  end
+
+  def draw
+    @grid.each_with_index { |x, i| puts @grid[i].join("") } #draws the grid
+  end
+
+  def create_blank_grid
+    @grid = Array.new(@row) {Array.new(@column, "O")} # creates the grid
+  end
+
+  def clear_grid
+    create_blank_grid
     puts ""
   end
+
+
 
   def draw_vertical(line)
     n = line.delete('V').split(" ")
@@ -85,12 +90,13 @@ class BitmapEditor
     elsif row_coordinate2 < 1 || row_coordinate1 > 250
       puts "sorry values must be between 1-250"
     else
-      grid = Array.new(@row) {Array.new(@column, "O")}
+      # grid = Array.new(@row) {Array.new(@column, "O")}
       range = row_coordinate1 - 1..row_coordinate2 - 1
       for i in range.step(1) do
-        grid[i][column_coordinate - 1] = color
+        @grid[i][column_coordinate - 1] = color
       end
-      grid.each_with_index { |x, i| puts grid[i].join("") }
+      # grid.each_with_index { |x, i| puts grid[i].join("") }
+      # draw
     end
     puts ""
   end
@@ -111,10 +117,11 @@ class BitmapEditor
       grid = Array.new(@row) {Array.new(@column, "O")}
       range = column_coordinate1 - 1..column_coordinate2 - 1
       for i in range.step(1) do
-        grid[row_coordinate - 1][i] = color
+        @grid[row_coordinate - 1][i] = color
       end
-      grid.each_with_index { |x, i| puts grid[i].join("") }
+      # grid.each_with_index { |x, i| puts grid[i].join("") }
     end
+    draw
     puts ""
   end
 
