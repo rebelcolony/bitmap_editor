@@ -1,6 +1,5 @@
 
 # TODO validate in regex
-# Draw grid only once
 
 class BitmapEditor
 
@@ -10,8 +9,6 @@ class BitmapEditor
     File.open(file).each do |line|
       line = line.chomp
       case line
-      when "S"
-          puts "There is no image"
       when /[I]\s\d{1,3}\s\d{1,3}/
           create_new(line)
       when /[C]/
@@ -22,6 +19,8 @@ class BitmapEditor
           draw_vertical(line)
       when /[H]\s\d{1,3}\s\d{1,3}\s\d{1,3}\s[A-Z]/
           draw_horizontal(line)
+      when /[S]/
+          draw
       else
           puts 'unrecognised command :('
       end
@@ -41,7 +40,6 @@ class BitmapEditor
       @column = column
       @row = row
       create_blank_grid
-      puts ""
     end
   end
 
@@ -55,11 +53,8 @@ class BitmapEditor
     elsif column_coordinate < 1 || column_coordinate > 250
       puts "sorry values must be between 1-250"
     else
-      # grid = Array.new(@row) {Array.new(@column, "O")}
       @grid[row_coordinate - 1][column_coordinate - 1] = color
-      # @grid.each_with_index { |x, i| puts @grid[i].join("") }
     end
-    # draw
   end
 
   def draw
@@ -90,15 +85,11 @@ class BitmapEditor
     elsif row_coordinate2 < 1 || row_coordinate1 > 250
       puts "sorry values must be between 1-250"
     else
-      # grid = Array.new(@row) {Array.new(@column, "O")}
       range = row_coordinate1 - 1..row_coordinate2 - 1
       for i in range.step(1) do
         @grid[i][column_coordinate - 1] = color
       end
-      # grid.each_with_index { |x, i| puts grid[i].join("") }
-      # draw
     end
-    puts ""
   end
 
   def draw_horizontal(line)
@@ -119,10 +110,7 @@ class BitmapEditor
       for i in range.step(1) do
         @grid[row_coordinate - 1][i] = color
       end
-      # grid.each_with_index { |x, i| puts grid[i].join("") }
     end
-    draw
-    puts ""
   end
 
 end
